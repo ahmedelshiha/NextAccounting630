@@ -308,7 +308,12 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
       {/* Button */}
       <div className="flex justify-end gap-2">
         <Button
-          onClick={onNext}
+          onClick={async () => {
+            if (onExecuteStart) {
+              await onExecuteStart()
+            }
+            onNext()
+          }}
           disabled={!dryRunResults}
           className="bg-blue-600 hover:bg-blue-700"
         >
