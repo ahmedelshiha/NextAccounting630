@@ -2,9 +2,17 @@
 
 import React, { memo, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
-import { Eye, Loader2 } from 'lucide-react'
+import { Eye, Loader2, MoreVertical } from 'lucide-react'
 import { usePermissions } from '@/lib/use-permissions'
 import { UserItem } from '../contexts/UsersContextProvider'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface UserActionsProps {
   user: UserItem
