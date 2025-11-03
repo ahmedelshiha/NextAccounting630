@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { useAuditLogs } from '../../hooks/useAuditLogs'
 import { Input } from '@/components/ui/input'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export function AuditTab() {
   const [showFilters, setShowFilters] = useState(false)
