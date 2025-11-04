@@ -259,11 +259,18 @@ export function useUnifiedUserService() {
     [getFromCache, setCache, hasFilters, buildSearchQuery]
   )
 
+  /**
+   * Invalidate cache (clears all cached users)
+   */
   const invalidateCache = useCallback(() => {
     userServiceCache.data = null
     userServiceCache.timestamp = 0
+    userServiceCache.filters = {}
   }, [])
 
+  /**
+   * Abort any pending requests
+   */
   const abort = useCallback(() => {
     abortControllerRef.current?.abort()
   }, [])
@@ -272,7 +279,7 @@ export function useUnifiedUserService() {
     fetchUsers,
     invalidateCache,
     abort,
-    isCacheValid: issCacheValid,
+    isCacheValid,
     getFromCache
   }
 }
