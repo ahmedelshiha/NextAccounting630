@@ -235,7 +235,7 @@ export function WorkstationIntegrated({
   return (
     <>
       <WorkstationLayout
-        sidebar={<WorkstationSidebar {...sidebarContent} />}
+        sidebar={<WorkstationSidebar {...sidebarProps} />}
         main={mainContent}
         insights={insightsContent}
       />
