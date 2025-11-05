@@ -1,158 +1,45 @@
 'use client'
 
-import React, { useState } from 'react'
-import { X } from 'lucide-react'
-import { WorkstationSidebarProps } from '../../types/workstation'
-import { QuickStatsCard } from './QuickStatsCard'
-import { SavedViewsButtons } from './SavedViewsButtons'
-import { AdvancedUserFilters, UserFilters } from '../AdvancedUserFilters'
-import './workstation.css'
+import { memo } from 'react'
+import type { WorkstationSidebarProps } from '../../types/workstation'
 
-/**
- * WorkstationSidebar Component
- * Fixed left sidebar (280px) with:
- * - Quick statistics card with auto-refresh
- * - Saved views buttons (All, Clients, Team, Admins)
- * - Advanced user filters (search, role, status, dept, date)
- * - Reset filters button
- *
- * Features:
- * - Scrollable content area
- * - Mobile drawer mode (hidden by default, toggled via layout)
- * - Persistent filter state via URL params
- * - Real-time stats updates
- */
-export function WorkstationSidebar({
-  isOpen = true,
+export const WorkstationSidebar = memo(function WorkstationSidebar({
+  isOpen,
   onClose,
-  filters = {
-    search: '',
-    role: undefined,
-    status: undefined,
-    department: undefined,
-    dateRange: 'all'
-  },
+  filters,
   onFiltersChange,
-  stats = {
-    totalUsers: 0,
-    activeUsers: 0,
-    pendingApprovals: 0,
-    inProgressWorkflows: 0,
-    refreshedAt: new Date()
-  },
+  stats,
   onAddUser,
   onReset,
-  className
 }: WorkstationSidebarProps) {
-  const [activeView, setActiveView] = useState('all')
-  const [isRefreshing, setIsRefreshing] = useState(false)
-
-  const handleSavedViewChange = (viewName: string, roleFilter?: string) => {
-    setActiveView(viewName)
-
-    // Reset filters and apply view-specific filter
-    const newFilters: UserFilters = {
-      search: '',
-      role: roleFilter as any,
-      status: undefined,
-      department: undefined,
-      dateRange: 'all'
-    }
-
-    onFiltersChange?.(newFilters)
-
-    if (process.env.WORKSTATION_LOGGING_ENABLED === 'true') {
-      console.log('[Workstation] Saved view applied:', viewName)
-    }
-  }
-
-  const handleFiltersChange = (newFilters: UserFilters) => {
-    onFiltersChange?.(newFilters)
-  }
-
-  const handleResetFilters = () => {
-    setActiveView('all')
-    onReset?.()
-  }
-
-  const handleRefreshStats = async () => {
-    setIsRefreshing(true)
-    try {
-      // Trigger parent refresh
-      await new Promise(resolve => setTimeout(resolve, 500))
-    } finally {
-      setIsRefreshing(false)
-    }
-  }
-
   return (
-    <div className={`workstation-sidebar-content ${className || ''}`}>
-      {/* Close Button (Mobile Drawer) */}
-      {isOpen && onClose && (
-        <button
-          onClick={onClose}
-          className="md:hidden absolute top-4 right-4 z-50 p-2 rounded-md hover:bg-muted transition-colors"
-          aria-label="Close sidebar"
-          title="Close sidebar"
-        >
-          <X size={20} />
-        </button>
-      )}
+    <div className="workstation-sidebar-content">
+      <div className="sidebar-section">
+        <h3 className="sidebar-title">Quick Stats</h3>
+        {/* QuickStatsCard will be integrated here */}
+        <div className="sidebar-placeholder">Quick Stats Component</div>
+      </div>
 
-      {/* Quick Stats Card */}
-      {stats && (
-        <QuickStatsCard
-          stats={stats}
-          isRefreshing={isRefreshing}
-          onRefresh={handleRefreshStats}
-        />
-      )}
+      <div className="sidebar-section">
+        <h3 className="sidebar-title">Saved Views</h3>
+        {/* SavedViewsButtons will be integrated here */}
+        <div className="sidebar-placeholder">Saved Views Component</div>
+      </div>
 
-      {/* Saved Views Buttons */}
-      <SavedViewsButtons
-        activeView={activeView}
-        onViewChange={handleSavedViewChange}
-        viewCounts={{
-          all: stats?.totalUsers || 0,
-          clients: stats?.totalUsers ? Math.round(stats.totalUsers * 0.3) : 0,
-          team: stats?.totalUsers ? Math.round(stats.totalUsers * 0.5) : 0,
-          admins: stats?.totalUsers ? Math.round(stats.totalUsers * 0.1) : 0
-        }}
-      />
+      <div className="sidebar-section flex-1 overflow-y-auto">
+        <h3 className="sidebar-title">Filters</h3>
+        {/* AdvancedUserFilters will be integrated here */}
+        <div className="sidebar-placeholder">Filters Component</div>
+      </div>
 
-      {/* Advanced Filters */}
-      {filters !== undefined && (
-        <section className="sidebar-section sidebar-filters">
-          <h3 className="sidebar-title">Filters</h3>
-          <div className="sidebar-filters-container">
-            <AdvancedUserFilters
-              filters={filters}
-              onFiltersChange={handleFiltersChange}
-            />
-          </div>
-        </section>
-      )}
-
-      {/* Active Filters Count Badge */}
-      {filters && (filters.search || filters.role || filters.status || filters.department) && (
-        <div className="px-2 py-1 bg-primary/10 rounded text-xs font-medium text-primary">
-          {Object.values(filters).filter(Boolean).length} active filter(s)
-        </div>
-      )}
-
-      {/* Footer */}
       <div className="sidebar-footer">
         <button
-          onClick={handleResetFilters}
-          className="sidebar-reset-btn"
-          aria-label="Reset all filters"
-          title="Clear all filters and reset to 'All Users' view"
+          className="btn-secondary w-full"
+          onClick={onReset}
         >
           Reset Filters
         </button>
       </div>
     </div>
   )
-}
-
-export default WorkstationSidebar
+})
