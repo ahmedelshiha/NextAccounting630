@@ -7,6 +7,8 @@ import AdminSidebar from './AdminSidebar'
 import DirectoryHeader from './DirectoryHeader'
 import UserDirectorySection from './UserDirectorySection'
 import BulkActionsPanel from './BulkActionsPanel'
+import { BuilderHeaderSlot, BuilderMetricsSlot, BuilderSidebarSlot, BuilderFooterSlot } from './BuilderSlots'
+import { useIsBuilderEnabled } from '@/hooks/useBuilderContent'
 import '../styles/admin-users-layout.css'
 
 /**
@@ -28,7 +30,7 @@ import '../styles/admin-users-layout.css'
  * │              │   └──────────────────┘    │
  * ├──────────────┴────────────────────────────┤
  * │  Sticky Footer: BulkActionsPanel (if sel) │
- * └─────────────────────────────────────────────┘
+ * └──────────────────────��──────────────────────┘
  * 
  * Responsive breakpoints:
  * - Desktop (≥1400px): Sidebar visible, 3-column layout
