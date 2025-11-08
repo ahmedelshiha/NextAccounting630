@@ -81,7 +81,7 @@ export const UsersTable = memo(function UsersTable({
   return (
     <div className="flex flex-col h-full bg-white border border-gray-200 rounded-lg">
       {/* Table Header */}
-      <div className="grid grid-cols-[40px_2fr_2fr_1fr_1fr_1fr_80px] items-center gap-4 px-4 py-3 border-b border-gray-200 bg-gray-50 flex-shrink-0" role="row" aria-label="Table header">
+      <div className="grid grid-cols-[40px_minmax(220px,2fr)_minmax(240px,2fr)_120px_110px_120px_80px] items-center gap-4 px-4 py-3 border-b border-gray-200 bg-gray-50 flex-shrink-0" role="row" aria-label="Table header">
         <div className="flex items-center justify-center">
           <Checkbox
             checked={allSelected || someSelected}
