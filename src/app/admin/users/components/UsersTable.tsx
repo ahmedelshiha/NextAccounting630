@@ -1,11 +1,9 @@
 'use client'
 
 import React, { memo, useCallback } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { UserItem } from '../contexts/UsersContextProvider'
 import UserRow from './UserRow'
-import { usePermissions } from '@/lib/use-permissions'
 import { VirtualScroller } from '@/lib/virtual-scroller'
 
 interface UsersTableProps {
