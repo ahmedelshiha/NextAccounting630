@@ -155,7 +155,7 @@ This document provides:
 │                                  │  │ Mik│mik@│Adm│Active│  │
 │  Filters                         │  │ Sop│sop@│View│Inact│  │
 │  ─────────────────────────────   │  └────────────────────────┘  │
-│  Role:   [All ▼]                │                              │
+│  Role:   [All ��]                │                              │
 │  Status: [All ▼]                │                              │
 │                                  │                              │
 ├──────────────────────────────────┴──────────────────────────────┤
@@ -2043,17 +2043,35 @@ This section documents the User Directory table features analyzed from the targe
    - **File:** `src/app/admin/users/components/UserRow.tsx`
 
 7. **Verify Actions Dropdown Menu**
-   - [ ] Three-dots button (⋮) displays in last column
-   - [ ] Dropdown menu includes these options:
-     - [ ] View Profile
-     - [ ] Edit Name
-     - [ ] Reset Password
-     - [ ] Change Role
-     - [ ] Delete User (red text)
-   - [ ] Menu alignment: right-aligned
-   - [ ] Click outside closes menu
-   - [ ] Keyboard navigation (arrow keys, Escape)
+   - [x] Three-dots button (⋮) displays in last column
+   - [x] Dropdown menu includes these options:
+     - [x] View Profile
+     - [x] Edit Name
+     - [x] Reset Password
+     - [x] Change Role
+     - [x] Delete User (red text)
+   - [x] Menu alignment: right-aligned
+   - [x] Click outside closes menu
+   - [x] Keyboard navigation (arrow keys, Escape)
    - **File:** `src/app/admin/users/components/UserRow.tsx`
+   - **Status:** ✅ COMPLETED
+   - **Implementation Details:**
+     - Three-dots button: `MoreVertical` icon from lucide-react
+     - Button styling: `p-1 rounded hover:bg-gray-100 transition-colors`
+     - Button size: Icon 4px × 4px (w-4 h-4)
+     - Button color: Gray text (text-gray-500)
+     - Dropdown component: `DropdownMenu` from `@/components/ui/dropdown-menu`
+     - Trigger: `DropdownMenuTrigger asChild` with button
+     - Content alignment: `align="end"` (right-aligned)
+     - Width: `w-48` (192px)
+     - Menu items (5 total):
+       1. View Profile: Calls `onViewProfile?.(user)`
+       2. Edit Name: Sets `setIsEditing(true)`
+       3. Reset Password: Placeholder for future implementation
+       4. Change Role: Placeholder for future implementation
+       5. Delete User: Styled with `className="text-red-600"` (red text)
+     - Built-in behavior: Click outside auto-closes, keyboard nav (Escape, arrow keys) supported
+     - Accessibility: `aria-label="More actions"` on trigger button
 
 8. **Verify View Profile Interaction**
    - [ ] Clicking "View Profile" opens UserProfileDialog
