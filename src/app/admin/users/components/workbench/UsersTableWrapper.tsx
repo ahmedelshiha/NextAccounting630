@@ -152,6 +152,9 @@ export default function UsersTableWrapper({
           selectedCount={selectedUserIds.size}
           totalCount={stats.totalCount}
           filteredCount={stats.filteredCount}
+          filteredUsers={filteredUsers}
+          allUsers={context.users}
+          selectedUserIds={selectedUserIds}
           onSelectAll={handleSelectAll}
           onClearFilters={clearFilters}
           roleOptions={[
@@ -168,6 +171,7 @@ export default function UsersTableWrapper({
             { value: 'SUSPENDED', label: 'Suspended' }
           ]}
           multiSelect={true}
+          showExport={true}
         />
 
         <div className="flex-1 overflow-hidden min-h-0 w-full">
