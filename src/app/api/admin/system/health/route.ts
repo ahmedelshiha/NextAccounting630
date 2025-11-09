@@ -13,6 +13,7 @@
 
 import { NextResponse } from 'next/server'
 import type { SystemHealthResponse } from '@/components/admin/layout/Footer/types'
+import prisma from '@/lib/prisma'
 
 /**
  * Helper to measure execution time
@@ -42,14 +43,8 @@ async function checkDatabase(): Promise<{
   try {
     latency = await measureTime(async () => {
       try {
-        // Using raw SQL for minimal overhead
-        const prisma = (await import('@prisma/client')).PrismaClient
-        const client = new prisma()
-
-        // Simple connectivity check
-        await client.$queryRaw`SELECT 1`
-
-        await client.$disconnect()
+        // Simple connectivity check using the imported client
+        await prisma.$queryRaw`SELECT 1`
       } catch (e) {
         throw e
       }
