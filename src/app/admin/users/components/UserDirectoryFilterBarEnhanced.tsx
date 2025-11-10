@@ -11,10 +11,14 @@ import { ExportButton } from './ExportButton'
 import { SearchSuggestionsDropdown } from './SearchSuggestionsDropdown'
 import { FilterPresetsMenu } from './FilterPresetsMenu'
 import { QuickFilterButtons, createDefaultQuickFilters } from './QuickFilterButtons'
+import { AdvancedQueryBuilder } from './AdvancedQueryBuilder'
+import { QueryTemplateManager } from './QueryTemplateManager'
 import { useSearchSuggestions } from '../hooks/useSearchSuggestions'
 import { useFilterPresets } from '../hooks/useFilterPresets'
+import { useQueryBuilder } from '../hooks/useQueryBuilder'
 import { FilterState } from '../hooks/useFilterState'
 import { UserItem } from '../contexts/UserDataContext'
+import { FilterGroup, FilterCondition } from '../types/query-builder'
 
 export interface UserDirectoryFilterBarEnhancedProps {
   filters: FilterState
@@ -97,6 +101,7 @@ export function UserDirectoryFilterBarEnhanced({
     getAllPresets
   } = useFilterPresets()
 
+  const queryBuilder = useQueryBuilder()
   const quickFilters = useMemo(() => createDefaultQuickFilters(), [])
 
   const hasActiveFilters = !!(
@@ -131,6 +136,19 @@ export function UserDirectoryFilterBarEnhanced({
     onFiltersChange(filterState)
   }, [onFiltersChange])
 
+  const handleApplyAdvancedQuery = useCallback((query: FilterGroup | FilterCondition) => {
+    const filtered = queryBuilder.applyQueryToUsers(allUsers)
+    const simpleFilters = queryBuilder.queryToFilterState()
+    onFiltersChange(simpleFilters)
+  }, [queryBuilder, allUsers, onFiltersChange])
+
+  const handleLoadTemplate = useCallback((template: any) => {
+    if (template.query) {
+      queryBuilder.setQuery(template.query)
+      handleApplyAdvancedQuery(template.query)
+    }
+  }, [queryBuilder, handleApplyAdvancedQuery])
+
   const handleSelectAllChange = useCallback((checked: boolean) => {
     onSelectAll(checked)
   }, [onSelectAll])
@@ -154,7 +172,7 @@ export function UserDirectoryFilterBarEnhanced({
     <div className="sticky top-0 z-20 bg-white border-b border-gray-200">
       {/* Main filter row */}
       <div
-        className="grid grid-cols-[40px_minmax(180px,2fr)_1fr_1fr_auto_auto] gap-3 p-3 items-center"
+        className="grid grid-cols-[40px_minmax(180px,2fr)_1fr_1fr_auto_auto_auto_auto] gap-3 p-3 items-center"
         role="toolbar"
         aria-label="User directory filters"
       >
@@ -253,6 +271,16 @@ export function UserDirectoryFilterBarEnhanced({
             size="sm"
           />
         )}
+
+        {/* Advanced Query Builder */}
+        <AdvancedQueryBuilder
+          onApplyQuery={handleApplyAdvancedQuery}
+        />
+
+        {/* Query Template Manager */}
+        <QueryTemplateManager
+          onLoadTemplate={handleLoadTemplate}
+        />
 
         {/* Clear Filters Button */}
         {hasActiveFilters && (
