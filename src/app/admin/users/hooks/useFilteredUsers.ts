@@ -57,11 +57,7 @@ export function useFilteredUsers(
   )
 
   // Fetcher function
-  const fetcher = useCallback(async (key: string) => {
-    if (!enabled) {
-      return null
-    }
-
+  const fetcher = useCallback(async (key: string): Promise<FilteredUsersResponse> => {
     const opId = `fetch-users-${Date.now()}`
     globalPerformanceMonitor.startTimer(opId)
 
