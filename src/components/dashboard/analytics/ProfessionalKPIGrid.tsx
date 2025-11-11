@@ -162,11 +162,11 @@ export default function ProfessionalKPIGrid({ stats }: KPIStatsProps) {
               </CardHeader>
 
               <CardContent className="pt-0">
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div className="flex items-baseline justify-between">
-                    <h3 className="text-2xl font-bold text-gray-900">{kpi.mainValue}</h3>
+                    <h3 className="text-lg font-bold text-gray-900">{kpi.mainValue}</h3>
                     {'secondaryValue' in kpi && kpi.secondaryValue && (
-                      <span className="text-sm font-medium text-gray-600">{kpi.secondaryValue}</span>
+                      <span className="text-xs font-medium text-gray-600">{kpi.secondaryValue}</span>
                     )}
                   </div>
 
