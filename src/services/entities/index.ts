@@ -110,7 +110,7 @@ export class EntityService {
 
         // Create default obligations for country
         const defaultObligations = getObligations(
-          input.country,
+          countryCode,
           input.entityType || "company"
         );
         await Promise.all(
