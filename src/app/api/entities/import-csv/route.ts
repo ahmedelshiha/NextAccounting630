@@ -60,16 +60,16 @@ export const POST = withTenantContext(
       const result = await processCsvImport(csvContent, tenantId, userId);
 
       // Log audit event
-      await logger.audit({
+      await logAuditSafe({
         action: 'entities.csv_import_started',
-        actorId: userId,
-        targetId: tenantId,
         details: {
+          actorId: userId,
+          targetId: tenantId,
           jobId: result.jobId,
           totalRows: result.totalRows,
           validRows: result.validRows,
         },
-      });
+      }).catch(() => {});
 
       return NextResponse.json({
         success: true,
