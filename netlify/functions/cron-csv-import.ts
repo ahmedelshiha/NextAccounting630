@@ -5,7 +5,7 @@ import { logger } from "@/lib/logger";
  * Netlify scheduled function to process CSV import jobs
  * Runs every 60 seconds
  */
-export default async (req: any) => {
+const csvImportHandler = async (req: any) => {
   try {
     // Verify cron secret
     const cronSecret = process.env.CRON_CSV_IMPORT_SECRET;
