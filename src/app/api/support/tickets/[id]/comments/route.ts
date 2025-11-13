@@ -23,7 +23,7 @@ export const GET = withTenantContext(
       }
 
       const comments = await prisma.supportTicketComment.findMany({
-        where: { ticketId: id, tenantId: tenantId! },
+        where: { ticketId: id },
         include: { author: { select: { id: true, email: true, name: true } } },
         orderBy: { createdAt: 'asc' },
       })
@@ -56,7 +56,7 @@ export const POST = withTenantContext(
       const comment = await prisma.supportTicketComment.create({
         data: {
           ticketId: id,
-          tenantId: tenantId!,
+          
           authorId: userId,
           content: validated.content,
         },
