@@ -231,7 +231,7 @@ export const GET = withTenantContext(
       );
     }
   },
-  { requireAuth: true }
+  { requireAuth: false }
 );
 
 export const POST = withTenantContext(
